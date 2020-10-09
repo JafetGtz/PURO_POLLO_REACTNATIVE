@@ -1,5 +1,5 @@
-import React from 'react';
-import {  View, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
+import React, {  useState } from 'react';
+import {  View, Text, StyleSheet, Dimensions, TouchableOpacity, TextInput } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import {  SignApple } from '../../utils/signApple';
 import { SignFacebook  } from '../../utils/login-facebook/loginFacebook'; 
@@ -7,10 +7,21 @@ const windowWidth = Dimensions.get('window').width;     //  Constantes de medion
 const windowHeight = Dimensions.get('window').height;
 
 export default function Panel(props) {
-
+   
+    const [_URL, setURL] = useState('');
 
    const goToRegister = () => {
        props.data.navigate('RegisterTel'); 
+   }
+
+   const keyboard  = (e) => {
+      setURL(e.nativeEvent.text);
+      console.log(e.nativeEvent.text)
+   }
+
+   const LoginFacebook = () => {
+      const { status   }  =   SignFacebook();
+      console.log(status);
    }
 
 
@@ -20,7 +31,7 @@ export default function Panel(props) {
              <Text style={{ fontSize: ( windowWidth * 7 )/100, fontWeight: 'bold' }}>Iniciar sesión</Text>
           </View>
             <View style={ Styles.body }>
-                        <TouchableOpacity style={Styles.face}  onPress={ SignFacebook }>
+                        <TouchableOpacity style={Styles.face}  onPress={ LoginFacebook }>
                             <Text style={{ color: 'white', fontWeight: 'bold', fontSize: ( windowWidth * 4.3 )/100 }}>Con Facebook</Text>
                         </TouchableOpacity>
                         <LinearGradient
@@ -40,6 +51,8 @@ export default function Panel(props) {
                                     Con numero telefonico
                                 </Text>
                                 </LinearGradient>
+
+                               
                         <TouchableOpacity style={Styles.apple} onPress={SignApple}>
                                <Text style={{ color: 'white', fontWeight: 'bold', fontSize: ( windowWidth * 4.3 )/100 }}>Sign in with Apple</Text>
                        </TouchableOpacity>
